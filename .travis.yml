@@ -17,11 +17,11 @@ after_success:
   #- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker login -u "$DOCKER_ID" -p "$DOCKER_PASSWORD" docker.io
   # Take those images and push them to docker hub
-  - docker tag local-image:multi-client new-repo:multi-client
-  - docker push vcc-software/multi-client
-  - docker tag local-image:multi-nginx new-repo:multi-nginx
-  - docker push vcc-software/multi-nginx
-  - docker tag local-image:multi-server new-repo:multi-server
-  - docker push vcc-software/multi-server
+  - docker tag local-image:multi-client new-repo:vcc-software/multi-client
+  - docker push new-repo:vcc-software/multi-client
+  - docker tag local-image:multi-nginx new-repo:vcc-software/multi-nginx
+  - docker push new-repo:vcc-software/multi-nginx
+  - docker tag local-image:multi-server new-repo:vcc-software/multi-server
+  - docker push new-repo:vcc-software/multi-server
   - docker tag local-image:vcc-software/multi-worker new-repo:vcc-software/multi-worker
-  - docker push vcc-software/multi-worker
+  - docker push new-repo:vcc-software/multi-worker
