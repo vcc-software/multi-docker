@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t vcc-software/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true vcc-software/react-test npm run test
+
+after_success:
+  - docker build -t vcc-software/multi-client ./client
+  - docker build -t vcc-software/multi-nginx ./nginx
+  - docker build -t vcc-software/multi-server ./server
+  - docker build -t vcc-software/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push vcc-software/multi-client
+  - docker push vcc-software/multi-nginx
+  - docker push vcc-software/multi-server
+  - docker push vcc-software/multi-worker
